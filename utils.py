@@ -2,14 +2,12 @@ import numpy as np
 
 # calculate the metrics from validation results
 def get_metrics(uproot_file, id):
-    tree = uproot_file[f"jetResponseMetrics" + str(id)]["output"]
+    tree = uproot_file[f"jetValidationMetrics" + str(id)]["output"]
 
     meanResp = tree["meanResp"].array()[0]
     rmsResp  = tree["rmsResp"].array()[0]
-
-    return [meanResp, rmsResp]
-    # if minimizing both
-    # return [1-meanResp, rmsResp]
+    
+    return [1-meanResp, rmsResp]
 
 # read a csv file, return a matrix
 def read_csv(filename):

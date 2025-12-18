@@ -1,4 +1,4 @@
-import optimizer
+import patatune as optimizer
 import subprocess
 from utils import get_metrics, write_csv
 import numpy as np
