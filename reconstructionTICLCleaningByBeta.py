@@ -125,7 +125,7 @@ for i, p in enumerate(params):
     zPower        = float(p[9])
     wmin          = float(p[10])
 
-    # Trackster cleaning 
+    # trackster cleaning 
     setattr(process, f"hltTiclTracksterCleaning{i}",
         process.hltTiclTracksterCleaning.clone(
             clue3DTracksters        = cms.InputTag("hltTiclTrackstersCLUE3DHigh"),
@@ -150,7 +150,7 @@ for i, p in enumerate(params):
     )
     cleaningModules.append(getattr(process, f"hltTiclTracksterCleaning{i}"))
 
-    # TICL candidate (feed cleaned products)
+    # TICL candidate 
     setattr(process, f"hltTiclCandidate{i}",
         process.hltTiclCandidate.clone(
             general_tracksterlinks_collections = cms.VInputTag(

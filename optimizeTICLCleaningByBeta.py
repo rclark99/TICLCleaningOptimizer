@@ -21,9 +21,6 @@ num_iterations = args.num_iterations
 optimizer.Logger.setLevel('DEBUG')
 optimizer.Randomizer.rng = np.random.default_rng(46)
 
-# -------------------------------------------------------------------------
-# CMSSW config to run (this is your cmsRun python config)
-# -------------------------------------------------------------------------
 config = 'reconstructionTICLCleaningByBeta.py'
 
 # bounds on parameters
