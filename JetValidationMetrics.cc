@@ -48,7 +48,7 @@ private:
   // output
   TTree* outTree_ = nullptr;
 
-  // accumulators (over whole job)
+  // accumulators 
   uint64_t nEvents_ = 0;
   uint64_t nGen_ = 0;
   uint64_t nMatched_ = 0;
@@ -59,7 +59,7 @@ private:
   double sumDR_ = 0.0;
   double sumDR2_ = 0.0;
 
-  // tree branches (written once in endJob)
+  // tree branches 
   uint64_t b_nEvents_ = 0;
   uint64_t b_nGen_ = 0;
   uint64_t b_nMatched_ = 0;
@@ -83,8 +83,7 @@ JetValidationMetrics::JetValidationMetrics(const edm::ParameterSet& iConfig)
   jetsToken_ = consumes<edm::View<reco::Jet>>(jetsTag_);
   genJetsToken_ = consumes<reco::GenJetCollection>(genJetsTag_);
 
-  // --- SimpleValidation-style ROOT layout:
-  // create a subdirectory named after this module label, then put TTree "output" inside it.
+
   edm::Service<TFileService> fs;
   const std::string label = moduleDescription().moduleLabel();
   TFileDirectory dir = fs->mkdir(label);
@@ -116,7 +115,6 @@ void JetValidationMetrics::analyze(const edm::Event& iEvent, const edm::EventSet
   if (!jetsH.isValid() || !genJetsH.isValid()) return;
   if (jetsH->empty() || genJetsH->empty()) return;
 
-  // loop over gen jets, match to closest reco jet
   for (const auto& gjet : *genJetsH) {
     if (gjet.pt() < matchGenPtThreshold_) continue;
     if (std::abs(gjet.eta()) > absEtaMax_) continue;
@@ -156,7 +154,6 @@ void JetValidationMetrics::analyze(const edm::Event& iEvent, const edm::EventSet
 }
 
 void JetValidationMetrics::endJob() {
-  // finalize scalars
   b_nEvents_ = nEvents_;
   b_nGen_ = nGen_;
   b_nMatched_ = nMatched_;
@@ -182,7 +179,6 @@ void JetValidationMetrics::endJob() {
     b_rmsDR_ = 0.0;
   }
 
-  // write exactly one row (SimpleValidation-style: scalar summary for this config)
   outTree_->Fill();
 }
 
